@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // import {  FlatList, View } from "react";
 
-class Register extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = { name: "", password: "", confirmPassword: "" };
@@ -13,29 +13,37 @@ class Register extends Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
+
     this.setState({
       [name]: value
     });
   }
 
   handleSubmit(event) {
-    this.SaveDataToLocalStorage(this.state);
+    this.checkDataInLocalStorage(this.state);
     event.preventDefault();
   }
 
-  SaveDataToLocalStorage(data) {
-    let clientsArr = JSON.parse(localStorage.getItem("users")) || [];
-    const { length } = clientsArr;
-    const id = length + 1;
-    data.id = id;
-    clientsArr.push(data);
-    localStorage.setItem("users", JSON.stringify(clientsArr));
+  checkDataInLocalStorage(data) {
+    let clientsArr = JSON.parse(localStorage.getItem("users"));
+    let found = clientsArr.some(el => {
+      if (el.name === data.name && el.password === data.password) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    if (found) {
+      console.log("Logged In");
+    } else {
+      console.log("Invalid User");
+    }
   }
 
   render() {
     return (
       <div>
-        <h2>Register</h2>
+        <h2>Login</h2>
         <form onSubmit={this.handleSubmit}>
           <label>
             Name:
@@ -57,16 +65,6 @@ class Register extends Component {
             />
           </label>
           <br />
-          <label>
-            Confirm Password:
-            <input
-              name="confirmPassword"
-              type="password"
-              value={this.state.confirmPassword}
-              onChange={this.handleChange}
-            />
-          </label>
-          <br />
           <input type="submit" value="Submit" />
         </form>
       </div>
@@ -74,4 +72,4 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default Login;
