@@ -34,11 +34,16 @@ class Login extends Component {
       }
     });
     if (found) {
-      console.log("Logged In");
+      return (
+          <b>Hello</b>
+      );
     } else {
-      console.log("Invalid User");
+        return (
+            <b>Invalid</b>
+        );
     }
   }
+
 
   render() {
     return (

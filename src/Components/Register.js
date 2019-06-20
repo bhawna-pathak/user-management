@@ -25,10 +25,12 @@ class Register extends Component {
 
   SaveDataToLocalStorage(data) {
     let clientsArr = JSON.parse(localStorage.getItem("users")) || [];
+    console.log(data);
     const { length } = clientsArr;
     const id = length + 1;
     data.id = id;
     clientsArr.push(data);
+    // if(data)
     localStorage.setItem("users", JSON.stringify(clientsArr));
   }
 
