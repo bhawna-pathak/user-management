@@ -25,13 +25,20 @@ class Register extends Component {
 
   SaveDataToLocalStorage(data) {
     let clientsArr = JSON.parse(localStorage.getItem("users")) || [];
-    console.log(data);
+    let found = clientsArr.some(el => {
+      if (el.name === data.name && el.password === data.password) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    if(!found) {
     const { length } = clientsArr;
     const id = length + 1;
     data.id = id;
     clientsArr.push(data);
-    // if(data)
     localStorage.setItem("users", JSON.stringify(clientsArr));
+    }
   }
 
   render() {
