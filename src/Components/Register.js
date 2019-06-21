@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-// import {  FlatList, View } from "react";
+import Login from "../Components/Login";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class Register extends Component {
   constructor(props) {
@@ -52,7 +53,12 @@ class Register extends Component {
   render() {
     return (
       <div>
+        <Router>
+          <Route path="/login" exact component={Login} />
+        </Router>
         <h2>Register</h2>
+        <Link to="/">Back</Link>
+
         <form onSubmit={this.handleSubmit}>
           <label>
             Name:

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-// import {  FlatList, View } from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Register from "../Components/Register";
+
 
 class Login extends Component {
   constructor(props) {
@@ -34,20 +36,18 @@ class Login extends Component {
       }
     });
     if (found) {
-      return (
-          <b>Hello</b>
-      );
+      return <b>Hello</b>;
     } else {
-        return (
-            <b>Invalid</b>
-        );
+      return <b>Invalid</b>;
     }
   }
-
 
   render() {
     return (
       <div>
+        <Router>
+          <Route path="/register" exact component={Register} />
+        </Router>
         <h2>Login</h2>
         <form onSubmit={this.handleSubmit}>
           <label>
@@ -72,6 +72,9 @@ class Login extends Component {
           <br />
           <input type="submit" value="Submit" />
         </form>
+
+        <br />
+        <Link to="/register">Register</Link>
       </div>
     );
   }
