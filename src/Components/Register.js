@@ -4,7 +4,12 @@ import React, { Component } from "react";
 class Register extends Component {
   constructor(props) {
     super(props);
-    this.state = { name: "", password: "", confirmPassword: "" };
+    this.state = {
+      name: "",
+      password: "",
+      confirmPassword: "",
+      isRegistered: false
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -32,12 +37,15 @@ class Register extends Component {
         return false;
       }
     });
-    if(!found) {
-    const { length } = clientsArr;
-    const id = length + 1;
-    data.id = id;
-    clientsArr.push(data);
-    localStorage.setItem("users", JSON.stringify(clientsArr));
+    if (!found) {
+      const { length } = clientsArr;
+      const id = length + 1;
+      data.id = id;
+      clientsArr.push(data);
+      this.setState({ isRegistered: true });
+      localStorage.setItem("users", JSON.stringify(clientsArr));
+    } else {
+      this.setState({ isRegistered: false });
     }
   }
 
@@ -78,9 +86,27 @@ class Register extends Component {
           <br />
           <input type="submit" value="Submit" />
         </form>
+        <Greeting isRegistered={this.state.isRegistered} />
       </div>
     );
   }
+}
+
+function Greeting(props) {
+  const isRegistered = props.value;
+  if (isRegistered) {
+    return <UserGreeting />;
+  } else {
+    return <GuestGreeting />;
+  }
+}
+
+function UserGreeting(props) {
+  return <h1>Welcome back!</h1>;
+}
+
+function GuestGreeting(props) {
+  return <h1>Please sign up.</h1>;
 }
 
 export default Register;
